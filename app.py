@@ -25,6 +25,7 @@ student_data=database[1]
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -325,30 +326,7 @@ def translate():
     # Mock translation function
     translated_text = content_translate(text)
     return jsonify({"translated_text": translated_text})
-def evaluate(question, answer, max_marks):
-    prompt = f"""Question: {question}
-    Answer: {answer}
 
-    Evaluate the above question by the provided answer and assign marks out of {max_marks}. Note that as maximum mark increases, the size of the answer must be large enough to get good marks. Give output in the format below:
-    Description:
-    Assigned marks:
-    Total marks: {max_marks}"""
-
-    messages = [
-        {"role": "system", "content": "You are an answer evaluator"},
-        {"role": "user", "content": prompt}
-    ]
-
-    response_content = ""
-    for chunk in AI71(AI71_API_KEY).chat.completions.create(
-            model="tiiuae/falcon-180b-chat",
-            messages=messages,
-            stream=True
-    ):
-        if chunk.choices[0].delta.content:
-            response_content += chunk.choices[0].delta.content
-
-    return response_content
 @app.route('/generate_step_by_step_explanation', methods=['POST'])
 def generate_step_by_step_explanation_route():
     data = request.get_json()
@@ -547,13 +525,7 @@ def serve_audio(filename):
     return send_from_directory(os.path.join(app.root_path, 'speech'), filename)
 
 
-if __name__ == '__main__':
-    if os.path.exists('uploads'):
-        shutil.rmtree('uploads')
-        os.makedirs('uploads')
-    else:
-        os.makedirs('uploads')
-    app.run(host='0.0.0.0', port=7860, debug=True)
+
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
     student_data = request.json
@@ -571,15 +543,13 @@ def generate_report():
     return jsonify({'report': report})
 
 
-@app.route('/translate', methods=['POST'])
-def translate():
-    data = request.json
-    text = data.get('text', '')
-    # Mock translation function
-    translated_text = content_translate(text)
-    return jsonify({"translated_text": translated_text})
+
 
 if __name__ == '__main__':
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    if os.path.exists('uploads'):
+        shutil.rmtree('uploads')
+        os.makedirs('uploads')
+    else:
+        os.makedirs('uploads')
     app.run(debug=True)
 
