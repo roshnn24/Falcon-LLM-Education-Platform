@@ -1,0 +1,653 @@
+.project-form {
+    background-color: var(--chat-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+input[type="text"], textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+textarea {
+    height: 100px;
+    resize: vertical;
+}    body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Arial', sans-serif;
+    }
+
+    .parallax {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    }
+
+    #background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    }
+
+    .header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    }
+
+    .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    }
+
+    .logo-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #48c6ef;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    animation: pulse 2s infinite;
+    }
+
+    .logo-circle span {
+    font-weight: bold;
+    }
+
+    @keyframes pulse {
+    0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    }
+    }
+
+    .school-name {
+    font-size: 3em;
+    animation: fadeIn 3s ease-in-out, colorChange 5s infinite;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    }
+
+    @keyframes colorChange {
+    0% { color: #48c6ef; }
+    25% { color: #6f86d6; }
+    50% { color: #48ef89; }
+    75% { color: #ef4848; }
+    100% { color: #48c6ef; }
+    }
+
+    @keyframes fadeIn {
+    0% {
+    opacity: 0;
+    transform: translateY(-20px);
+    }
+    100% {
+    opacity: 1;
+    transform: translateY(0);
+    }
+    }
+
+    .content {
+    height: 70vh; /* Reduced height to accommodate additional sections */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../static/portal.jpeg'); /* Path to your image */
+    background-size: cover;  /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents image repetition */
+    text-align: center;
+    padding: 20px;
+    position: relative; /* Ensure it can layer correctly */
+    z-index: 1; /* Ensures content is on top */
+    }
+
+    .container {
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-prompt p {
+    font-size: 1.2em;
+    color: #555;
+    }
+
+    .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .role-button {
+    margin: 10px 0;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .role-button.student {
+    background-color: #48c6ef;
+    color: white;
+    }
+
+    .role-button.teacher {
+    background-color: #6f86d6;
+    color: white;
+    }
+
+    .role-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .info-section {
+    padding: 40px;
+    background-color: #f7f7f7;
+    text-align: center;
+    }
+
+    .info-section h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+    }
+
+    .faq ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+    }
+
+    .faq li {
+    margin-bottom: 15px;
+    color: #555;
+    }
+
+    .contact-info {
+    margin-top: 30px;
+    }
+
+    .contact-info p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #555;
+    }
+
+    @media (min-width: 600px) {
+    .button-container {
+    flex-direction: row;
+    justify-content: space-between;
+    }
+
+    .role-button {
+    margin: 0 10px;
+    width: 200px;
+    }
+
+    .info-section {
+    text-align: center;
+    padding: 20px 40px;
+    }
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    :root {
+    --primary-color: #4e54c8;
+    --secondary-color: #8f94fb;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --bg-color: #f9f9f9;
+    }
+
+    body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    }
+
+    .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    }
+
+    h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    }
+
+    .quiz-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+    margin-bottom: 20px;
+    }
+
+    label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    }
+
+    input[type="text"],
+    select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    }
+
+    .btn {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    }
+
+    .btn:hover {
+    background-color: #ff4757;
+    transform: translateY(-3px);
+    }
+
+    .quiz-result {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .question {
+    margin-bottom: 20px;
+    }
+
+    .question h3 {
+    color: var(--primary-color);
+    }
+
+    .options {
+    list-style-type: none;
+    padding: 0;
+    }
+
+    .options li {
+    margin-bottom: 10px;
+    }
+
+    .options input[type="radio"] {
+    margin-right: 10px;
+    }
+
+    @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+    }
+
+    .fade-in {
+    animation: fadeIn 0.5s ease-out;
+    }
+    .back-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+    background-color: var(--secondary-color);
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #4e54c8;
+    --secondary-color: #8f94fb;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --bg-color: #f9f9f9;
+    --chat-bg: #fff;
+    --user-msg-bg: #e6f3ff;
+    --ai-msg-bg: #f0f0f0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+}
+
+.chat-container {
+    background-color: var(--chat-bg);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.user-message {
+    background-color: var(--user-msg-bg);
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.ai-message {
+    background-color: var(--ai-msg-bg);
+    align-self: flex-start;
+}
+
+.chat-input {
+    display: flex;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.chat-input button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #ff4757;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+} 
+        /* Add these styles */
+        .study-plan-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .project-form {
+            background-color: var(--chat-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+    
+        .pdf-upload {
+            margin-bottom: 20px;
+        }
+        .pdf-status {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .chat-container {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+        .user-message {
+            background-color: #e6f3ff;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .ai-message {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+        }
+        .photo-upload {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .photo-upload input[type="file"] {
+            display: none;
+        }
+        .photo-upload label {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .photo-upload span {
+            font-style: italic;
+        }
+        body {
+            background-color: #f0f4f8;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .background-decoration {
+            position: absolute;
+            z-index: -1;
+        }
+        
+        .circle {
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background-color: rgba(78, 84, 200, 0.1);
+            top: -150px;
+            left: -150px;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(143, 148, 251, 0.1);
+            bottom: -100px;
+            right: -100px;
+        }
+        
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 107, 107, 0.1);
+            transform: rotate(45deg);
+            position: absolute;
+            top: 50%;
+            left: 50px;
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 86.6px solid rgba(78, 84, 200, 0.1);
+            position: absolute;
+            top: 100px;
+            right: 100px;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .photo-upload {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chat-container {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .logo-circle {
+            width: 100px; /* Adjust the size as needed */
+            height: 100px; /* Adjust the size as needed */
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
