@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLearn - AI Tutor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .back-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin: 20px 0;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-input {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #ecf0f1;
+            box-sizing: border-box;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            min-width: 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+        }
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .chat-input button:hover {
+            background-color: #2980b9;
+        }
+        .image-upload {
+            margin-right: 10px;
+        }
+        .image-upload input[type="file"] {
+            display: none;
+        }
+        .image-upload label {
+            cursor: pointer;
+            font-size: 24px;
+            color: #3498db;
+            transition: color 0.3s ease;
+        }
+        .image-upload label:hover {
+            color: #2980b9;
+        }
+        .message {
+            display: block;
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            position: relative;
+            clear: both;
+        }
+        .user-message {
+            background-color: #3498db;
+            color: white;
+            float: right;
+        }
+        .ai-message {
+            background-color: #7b989e;
+            color: #333;
+            float: left;
+            padding-bottom: 30px; /* Space for translate option */
+        }
+        .message img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://hashagile.com/wp-content/uploads/2022/02/ils_13.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .feature-icon {
+            font-size: 24px;
+            margin: 0 15px;
+            color: #3498db;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .feature-icon:hover {
+            transform: scale(1.2);
+            color: #2980b9;
+        }
+        .typing-indicator {
+            display: flex;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            align-items: center;
+            font-style: italic;
+            color: #7f8c8d;
+            align-self: flex-start;
+            clear: both;
+        }
+        .typing-indicator .dots {
+            display: flex;
+            margin-left: 10px;
+        }
+        .typing-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #7f8c8d;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .typing-indicator .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .translate-link {
+            font-size: 14px;
+            color: #3498db;
+            cursor: pointer;
+            text-decoration: underline;
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+        }
+        .translate-link:hover {
+            color: #2980b9;
+        }
+        .rotate {
+            animation: rotation 2s;
+        }
+        .linear {
+            animation-timing-function: linear;
+        }
+        .infinite {
+            animation-iteration-count: infinite;
+        }
+        @keyframes rotation {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(359deg);
+            }
+        }
+        .center-rotate-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.back-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.back-button:hover {
+    background-color: #2980b9;
+}
+
+h1 {
+    text-align: center;
+    color: #3498db;
+    margin: 20px 0;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    padding-bottom: 80px; /* Extra padding to ensure the input box does not cover the last message */
+}
+
+.chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ecf0f1;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: #2980b9;
+}
+
+.image-upload {
+    margin-right: 10px;
+}
+
+.image-upload input[type="file"] {
+    display: none;
+}
+
+.image-upload label {
+    cursor: pointer;
+    font-size: 24px;
+    color: #3498db;
+    transition: color 0.3s ease;
+}
+
+.image-upload label:hover {
+    color: #2980b9;
+}
+
+.message {
+    display: block;
+    max-width: 80%;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    position: relative;
+    clear: both;
+}
+
+.user-message {
+    background-color: #3498db;
+    color: white;
+    float: right;
+}
+
+.ai-message {
+    background-color: #c1cccc;
+    color: #333;
+    float: left;
+    padding-bottom: 30px; /* Space for translate option */
+}
+
+.message img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://hashagile.com/wp-content/uploads/2022/02/ils_13.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.feature-icon {
+    font-size: 24px;
+    margin: 0 15px;
+    color: #3498db;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.feature-icon:hover {
+    transform: scale(1.2);
+    color: #2980b9;
+}
+
+.typing-indicator {
+    display: flex;
+    padding: 10px;
+    background-color: #ecf0f1;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    align-items: center;
+    font-style: italic;
+    color: #7f8c8d;
+    align-self: flex-start;
+    clear: both;
+}
+
+.typing-indicator .dots {
+    display: flex;
+    margin-left: 10px;
+}
+
+.typing-indicator .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #7f8c8d;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.typing-indicator .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.translate-link {
+    font-size: 14px;
+    color: #3498db;
+    cursor: pointer;
+    text-decoration: underline;
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+}
+
+.translate-link:hover {
+    color: #2980b9;
+}
+
+.rotate {
+    animation: rotation 2s;
+}
+
+.linear {
+    animation-timing-function: linear;
+}
+
+.infinite {
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.center-rotate-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+    <h1><i class="fas fa-robot"></i> AI Tutor</h1>
+    <div class="features">
+        <i class="fas fa-microphone feature-icon" title="Voice Input"></i>
+        <i class="fas fa-language feature-icon" title="Language Translation"></i>
+        <i class="fas fa-book feature-icon" title="Study Resources"></i>
+        <i class="fas fa-chart-line feature-icon" title="Progress Tracking"></i>
+    </div>
+    <div class="center-rotate-container">
+        <img src="https://hashagile.com/wp-content/uploads/2022/02/ils_13_1.svg" class="rotate linear infinite" width="150" height="150" />
+    </div>
+    <div class="">
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input">
+            <div class="image-upload">
+                <label for="image-file">
+                    <i class="fas fa-paperclip"></i>
+                </label>
+                <input type="file" id="image-file" accept="image/*">
+            </div>
+            <input type="text" id="user-input" placeholder="Ask your question...">
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const message = document.getElementById('user-input').value.trim();
+            if (message) {
+                addMessage(message, true);
+                document.getElementById('user-input').value = '';
+                showTypingIndicator();
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    hideTypingIndicator();
+                    addMessage(data.response, false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    hideTypingIndicator();
+                });
+            }
+        }
+
+        function addMessage(content, isUser, imageUrl) {
+            const messageWrapper = document.createElement('div');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+            
+            if (imageUrl) {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                messageDiv.appendChild(img);
+            }
+            
+            const textDiv = document.createElement('div');
+            textDiv.textContent = content;
+            messageDiv.appendChild(textDiv);
+
+            if (!isUser) {
+                const translateLink = document.createElement('span');
+                translateLink.className = 'translate-link';
+                translateLink.textContent = 'Translate';
+                translateLink.onclick = function() {
+                    translateMessage(textDiv);
+                };
+                messageDiv.appendChild(translateLink);
+            }
+
+            messageWrapper.appendChild(messageDiv);
+            document.getElementById('chat-messages').appendChild(messageWrapper);
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = 'AI is typing<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+            document.getElementById('chat-messages').appendChild(typingDiv);
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.querySelector('.typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        document.getElementById('image-file').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addMessage('Image uploaded', true, e.target.result);
+                }
+                reader.readAsDataURL(file);
+
+                const formData = new FormData();
+                formData.append('image-file', file);
+
+                showTypingIndicator();
+                fetch('/upload_image_for_ocr', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    hideTypingIndicator();
+                    addMessage(data.ai_response, false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    hideTypingIndicator();
+                });
+            }
+        });
+
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Add welcome message
+        window.onload = function() {
+            addMessage("Hello! I'm your AI Tutor. How can I help you today?", false);
+        }
+    function translateMessage(messageDiv) {
+        const text = messageDiv.textContent;
+    
+        fetch('/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: text })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.translated_text) {
+                messageDiv.textContent = data.translated_text;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }</script>
+</body>
+</html>

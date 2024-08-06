@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLearn - Step-by-Step Explanations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .translate-link {
+            font-size: 14px;
+            color: #3498db;
+            cursor: pointer;
+            text-decoration: underline;
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+        }
+        .translate-link:hover {
+            color: #2980b9;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .chat-container {
+            background-color: rgba(248, 249, 250, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+            animation: fadeIn 0.5s;
+            word-wrap: break-word;
+            position: relative;
+        }
+        .user-message {
+            background-color: rgba(0, 123, 255, 0.8);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .ai-message {
+            background-color: rgba(21, 106, 192, 0.2);
+            color: #333;
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        #user-input {
+            flex-grow: 1;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 16px;
+            background-color: rgba(241, 243, 245, 0.8);
+        }
+        button {
+            background-color: rgba(0, 123, 255, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        button:hover {
+            background-color: rgba(0, 86, 179, 0.8);
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(108, 117, 125, 0.8);
+        }
+        .back-button:hover {
+            background-color: rgba(90, 98, 104, 0.8);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .typing-animation {
+            display: inline-block;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border-right: 2px solid #333;
+            padding-right: 2px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="background-video">
+        <source src="../static/stepbystep.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="container">
+        <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+        <h1><i class="fas fa-graduation-cap"></i> Step By Step Explanation</h1>
+        <div class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <!-- Messages will be added here dynamically -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Ask your question here...">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const initialMessage = "Hey there! I'm here to assist you. You can ask any question, and I'll explain it step by step to make it professional.";
+
+        function typeWriter(text, element, index = 0) {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(() => typeWriter(text, element, index), 10);
+            } else {
+                element.style.borderRight = 'none';
+            }
+        }
+
+        function addMessage(content, isUser) {
+            // Remove any existing typing animation
+            const existingTyping = chatMessages.querySelector('.typing-animation');
+            if (existingTyping) {
+                existingTyping.parentElement.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+            messageDiv.innerHTML = content.replace(/\n/g, '<br>');
+
+            if (!isUser) {
+                const translateLink = document.createElement('span');
+                translateLink.className = 'translate-link';
+                translateLink.textContent = 'Translate';
+                translateLink.onclick = function() {
+                    translateMessage(messageDiv);
+                };
+                messageDiv.appendChild(translateLink);
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            if (!isUser) {
+                const typingSpan = document.createElement('span');
+                typingSpan.className = 'typing-animation';
+                typeWriter(content, typingSpan);
+            }
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = 'AI is typing<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.querySelector('.typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function translateMessage(messageDiv) {
+            const text = messageDiv.textContent;
+
+            fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.translated_text) {
+                    messageDiv.innerHTML = data.translated_text;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                userInput.value = '';
+
+                showTypingIndicator();
+
+                fetch('/generate_step_by_step_explanation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ question: message }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    hideTypingIndicator();
+                    addMessage(data.answer, false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    hideTypingIndicator();
+                    addMessage("Sorry, there was an error processing your request.", false);
+                });
+            }
+        }
+
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onload = function() {
+            addMessage(initialMessage, false);
+        };
+    </script>
+</body>
+</html>
