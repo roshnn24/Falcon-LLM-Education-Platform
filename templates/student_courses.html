@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Page - SmartLearn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='student_course.css') }}">
+</head>
+<body>
+    <style> 
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+    
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+    
+    
+        .nav-bar {
+                background-color: #fff;
+                padding: 10px 0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+    
+            .nav-bar ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+    
+            .nav-bar li {
+                margin: 0 15px;
+            }
+    
+            .nav-bar a {
+                text-decoration: none;
+                color: var(--text-color);
+                font-weight: 600;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+            }
+    
+            .nav-bar a img {
+                height: 24px;
+                margin-right: 5px;
+            }
+    
+        </style>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><img src="../static/smart-learn.jpeg" alt="">SmartLearn</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for anything">
+                    <div class="ai-tools">
+                        <i class="fas fa-camera" title="Photo Question Answering"></i>
+                        <i class="fas fa-brain" title="AI Tutor"></i>
+                        <i class="fas fa-robot" title="AI Assistant"></i>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <span class="points-display">1500 pts</span>
+                    <div class="profile-icon">U</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="{{ url_for('student') }}"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">Home</a></li>
+            <li><a href="{{ url_for('student') }}#ai-powered-tools"><img src="https://www.kalupurbank.com/wp-content/uploads/2023/02/robot-chatbot-icon-sign-free-vector.webp" alt="Home">Ai Tools</a></li>
+            <li><a href="{{ url_for('homework') }}"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Homework">Homework</a></li>
+            <li><a href="{{ url_for('student_courses') }}"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Courses">Courses</a></li>
+            <li><a href="{{ url_for('speak') }}"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Speak With AI">Speak With AI</a></li>
+            <li><a href="{{ url_for('summarise_video') }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1280px-YouTube_full-color_icon_%282017%29.svg.png" alt="Ssummarise_video">summarise_video</a></li>
+        </ul>
+    </nav>
+    
+
+    <main class="container">
+        <div class="course-content">
+            <div class="main-content">
+                <h2>Course Overview</h2>
+                <p>This course provides a comprehensive introduction to Artificial Intelligence, covering key concepts, algorithms, and applications.</p>
+                
+                <form id="concept-form">
+                    <input type="text" id="concept-input" placeholder="Enter a concept to learn">
+                    <button type="submit">Search</button>
+                </form>
+
+                <h3>Current Lesson: <span id="lesson-title">Neural Networks</span></h3>
+                <div class="video-container">
+                    <iframe id="video-frame" src="https://www.youtube.com/embed/aircAruvnKk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+                
+                <h3>Course Materials</h3>
+                <ul class="pdf-list">
+                    <li><a href="#"><i class="fas fa-file-pdf"></i> Lecture Notes - Week 1</a></li>
+                    <li><a href="#"><i class="fas fa-file-pdf"></i> Lecture Notes - Week 2</a></li>
+                    <li><a href="#"><i class="fas fa-file-pdf"></i> Assignment 1</a></li>
+                </ul>
+                
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p>Course Progress: 60%</p>
+            </div>
+            
+            <aside class="sidebar">
+                <h3>Additional Resources</h3>
+                <ul class="resource-list">
+                    <li><a href="#"><i class="fas fa-book"></i> Textbook: AI: A Modern Approach</a></li>
+                    <li><a href="#"><i class="fas fa-link"></i> AI Ethics Guidelines</a></li>
+                    <li><a href="#"><i class="fas fa-code"></i> Python for AI (Tutorial)</a></li>
+                </ul>
+                
+                <h3>Upcoming Deadlines</h3>
+                <ul>
+                    <li>Assignment 1 Due: July 15, 2024</li>
+                    <li>Quiz 1: July 20, 2024</li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#concept-form').submit(function(e) {
+            e.preventDefault();
+            var concept = $('#concept-input').val();
+            
+            $.ajax({
+                url: '/search_youtube',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({query: concept}),
+                success: function(response) {
+                    $('#video-frame').attr('src', `https://www.youtube.com/embed/${response.videoId}`);
+                    $('#lesson-title').text(response.videoTitle);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('An error occurred while searching for videos: ' + errorThrown);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

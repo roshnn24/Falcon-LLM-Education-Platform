@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Timetable Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+            background-image: url('../static/time.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(240, 244, 248, 0.2); /* Adjust the last value (0.8) for transparency */
+            z-index: -1;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            color: #34495e;
+        }
+        textarea, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #result {
+            display: none;
+            margin-top: 30px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #result h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        pre {
+            background-color: #f7f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .icon-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .icon-container i {
+            font-size: 48px;
+            color: #3498db;
+            margin: 0 10px;
+        }
+        #result {
+            display: none;
+            margin-top: 30px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #result h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 24px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        pre {
+            background-color: #f7f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #34495e;
+            border-left: 4px solid #3498db;
+        }
+
+        .response-section {
+            margin-bottom: 30px;
+        }
+
+        .response-content {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .highlight {
+            background-color: #f1c40f;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .back-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+    </style>
+
+
+</head>
+<body>
+    <a href="teacher" class="back-button" title="Back to Home">
+    <i class="fas fa-arrow-left"></i>
+    </a>
+    <h1>Slow Learners Management</h1>
+    <div class="icon-container">
+        <i class="fas fa-graduation-cap"></i>
+        <i class="fas fa-clock"></i>
+        <i class="fas fa-calendar-alt"></i>
+    </div>
+    <form id="timetableForm">
+        <label for="academic_topics"><i class="fas fa-book"></i> Enter a list of academic topics, separated by commas:</label><br>
+        <textarea name="academic_topics" id="academic_topics" rows="4" required></textarea><br>
+
+        <label for="hours_per_day"><i class="fas fa-hourglass-half"></i> Enter the number of hours per day:</label><br>
+        <input type="number" name="hours_per_day" id="hours_per_day" required><br>
+
+        <input type="submit" value="Generate Timetable">
+    </form>
+
+    <div id="loading">
+        <div class="loader"></div>
+        <p>Generating timetable...</p>
+    </div>
+
+<div id="result">
+    <div class="response-section">
+        <h2><i class="fas fa-list-ul"></i> Clustered Topics</h2>
+        <div class="response-content">
+            <pre id="clusteredTopics"></pre>
+        </div>
+    </div>
+
+    <div class="response-section">
+        <h2><i class="fas fa-table"></i> Special Timetable</h2>
+        <div class="response-content">
+            <pre id="specialTimetable"></pre>
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('timetableForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            var formData = new FormData(this);
+
+            fetch('/generate_ai_timetable', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('clusteredTopics').textContent = data.clustered_topics;
+                document.getElementById('specialTimetable').textContent = data.special_timetable;
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
