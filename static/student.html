@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLearn - AI-Powered Education Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1340px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            position: relative;
+            max-width: 700px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            background-color: rgba(255,255,255,0.2);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .search-bar input:focus {
+            background-color: rgba(255,255,255,0.3);
+            outline: none;
+        }
+
+        .ai-tools {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ai-tools i {
+            font-size: 20px;
+            margin-left: 15px;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .ai-tools i:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .points-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 20px;
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-bar {
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-bar li {
+            margin: 0 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar a img {
+            height: 24px;
+            margin-right: 5px;
+        }
+
+
+
+        .nav-bar a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 25px 0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../static/school.avif') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background-color: #ff4757;
+            transform: translateY(-3px);
+        }
+
+        .categories{
+            padding: 60px 0;
+            background-color: #fff;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .features {
+            position: relative; /* Required for positioning the overlay */
+            padding: 60px 0;
+            background-color: #fff; /* Background color for fallback */
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            background-image: url(https://st.depositphotos.com/1169502/2273/v/950/depositphotos_22739399-stock-illustration-abstract-purple-wave-background.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white overlay */
+            border-radius: 10px; /* Match the container's border-radius */
+            z-index: 1; /* Ensure the overlay is above the image */
+        }
+
+        .features > * {
+            position: relative;
+            z-index: 2; /* Ensure content is above the overlay */
+        }
+
+
+        .learning-section {
+            padding: 60px 0;
+            background-color: #fff;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-image: url(../static/course.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .learning-item {
+    display: block;
+    overflow: hidden;
+    border: 1px solid #ddd; /* Optional: Adds a border to the container */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    margin-bottom: 20px; /* Adjust spacing between items */
+}
+
+.learning-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.learning-content {
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .category-list, .feature-grid, .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-item, .feature-card, .learning-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-item:hover, .feature-card:hover, .learning-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.feature-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.feature-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    margin: 10px 0;
+}
+
+.feature-card p {
+    margin: 10px 0 20px;
+}
+
+.feature-card .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fff;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            color: #fff;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        .performance-graph {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f4f8;
+    border-radius: 10px;
+}
+
+#performanceChart {
+    width: 100%;
+    height: 300px;
+}
+/* Existing styles... */
+
+/* Profile Sidebar Styles */
+.profile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-out;
+    overflow-y: auto;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.profile-sidebar.active {
+    right: 0;
+}
+
+@media (min-width: 768px) {
+    .profile-sidebar {
+        width: 50%;
+    }
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-info {
+    background-color: #f0f4f8;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.subjects ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.subjects li {
+    background-color: #e6f3ff;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.performance-graph {
+    margin-top: 20px;
+}
+
+#performanceChart {
+    width: 100%;
+    height: 200px;
+}
+
+/* Ensure the profile icon is clickable */
+.profile-icon {
+    cursor: pointer;
+}
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.welcome-message {
+    align-self: flex-start;
+    margin-bottom: 20px;
+}
+
+.welcome-message h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.welcome-message p {
+    font-size: 16px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero > p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+}
+
+.welcome-message {
+    margin-bottom: 20px;
+}
+
+.text-and-image {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.text-section {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.image-section {
+    flex: 1;
+    max-width: 400px; /* Adjust the max width as needed */
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../static/smart-learn.jpeg" alt="">
+                    SmartLearn
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for anything">
+                    <div class="ai-tools">
+                        <i class="fas fa-camera" title="Photo Question Answering"></i>
+                        <i class="fas fa-brain" title="AI Tutor"></i>
+                        <i class="fas fa-robot" title="AI Assistant"></i>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <a href="{{ url_for('student_reward_points') }}" class="points-display">1500 pts</a>
+                    <div class="profile-icon" id="profile-icon">A</div>
+                </div>
+            </div>
+        </div>
+    </header>
+   <nav class="nav-bar">
+    <ul>
+        <li><a href="{{ url_for('student') }}"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">Home</a></li>
+        <li><a href="{{ url_for('student') }}#ai-powered-tools"><img src="https://www.kalupurbank.com/wp-content/uploads/2023/02/robot-chatbot-icon-sign-free-vector.webp" alt="Home">Ai Tools</a></li>
+        <li><a href="{{ url_for('homework') }}"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Homework">Homework</a></li>
+        <li><a href="{{ url_for('student_courses') }}"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Courses">Courses</a></li>
+        <li><a href="{{ url_for('speak') }}"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Speak With AI">Speak With AI</a></li>
+        <li><a href="{{ url_for('summarise_video') }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1280px-YouTube_full-color_icon_%282017%29.svg.png" alt="Ssummarise_video">summarise_video</a></li>
+    </ul>
+</nav>
+
+
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="welcome-message">
+                    <h2>Welcome, {{student.name}}</h2>
+                    <p>Ready to continue your learning journey?</p>
+                </div>
+                <div class="text-and-image">
+                    <div class="text-section">
+                        <h1>Revolutionize Your Learning with AI</h1>
+                        <p>Unlock your potential with our cutting-edge AI education platform</p>
+                        <a href="{{ url_for('student') }}#ai-powered-tools" class="btn">Start Learning Now</a>
+                    </div>
+                    <div class="image-section">
+                        <img src="https://i.pinimg.com/736x/64/bf/d1/64bfd1fa2cfdbf0288a96628395d2f9f.jpg" alt="Welcome Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="categories">
+        <div class="container">
+            <h2>Top Categories</h2>
+            <div class="category-list">
+                <div class="category-item">Math</div>
+                <div class="category-item">Science</div>
+                <div class="category-item">Language Arts</div>
+                <div class="category-item">History</div>
+                <div class="category-item">Computer Science</div>
+                <div class="category-item">Foreign Languages</div>
+                <div class="category-item">Test Prep</div>
+                <div class="category-item">Arts & Music</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="learning-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Continue your learning journey</h2>
+                <a href="#" class="my-learning">My learning</a>
+            </div>
+            <div class="learning-grid">
+
+                <a  href="{{ url_for('student_courses') }}" class="learning-item">
+                    <img src="https://i4.ytimg.com/vi/aircAruvnKk/sddefault.jpg" alt="Python and Django">
+                    <div class="learning-content">
+                        <div class="learning-title">
+                            <span class="icon-play"></span>
+                            Python Neural network
+                        </div>
+                        <div class="learning-subtitle">48. Advanced  Models</div>
+                        <div class="learning-meta">Lecture • 15min</div>
+                    </div>
+                </a>
+                <a href="{{ url_for('homework') }}" class="learning-item">
+                    <img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2024/01/cover-page--scaled.jpg" alt="AI Quiz">
+                    <div class="learning-content">
+                        <div class="learning-title">
+                            <span class="icon-quiz"></span>
+                            AI-Generated Quiz
+                        </div>
+                        <div class="learning-subtitle">Test Your Knowledge</div>
+                        <div class="learning-meta">Quiz • 10 questions</div>
+                    </div>
+                </a>
+                <a  href="{{ url_for('student_courses') }}" class="learning-item">
+                    <img src="https://www.fsm.ac.in/blog/wp-content/uploads/2022/07/FUqHEVVUsAAbZB0-1024x580.jpg" alt="Data Science">
+                    <div class="learning-content">
+                        <div class="learning-title">
+                            <span class="icon-play"></span>
+                            Introduction to Data Science
+                        </div>
+                        <div class="learning-subtitle">2. Data Visualization Techniques</div>
+                        <div class="learning-meta">Lecture • 20min</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section  id="ai-powered-tools" class="features">
+        <div class="container">
+            <h2>AI-Powered Learning Tools</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <img src="data:image/png;base64,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" alt="Quiz Generation">
+                    <h3>Quiz Generation</h3>
+                    <p>Create custom quizzes on any topic</p>
+                    <a href="/student_quiz" class="btn">Generate Quiz</a>
+                </div>
+                
+                <div class="feature-card">
+                    <img src="https://cdn-icons-png.freepik.com/256/4295/4295914.png?semt=ais_hybrid" alt="Step-by-Step Explanations">
+                    <h3>Step-by-Step Explanations</h3>
+                    <p>Detailed solutions for complex problems</p>
+                    <a href="/student_stepexplanation" class="btn">Get Explanation</a>
+                </div>
+                <div class="feature-card">
+                    <img src="https://evelynlearning.b-cdn.net/wp-content/uploads/2023/09/ai-8160920-2-1024x575.jpg" alt="AI Tutor">
+                    <h3>AI Tutor</h3>
+                    <p>One-on-one tutoring with AI</p>
+                    <a href="/student_aitutor" class="btn">Start Session</a>
+                </div>
+                <div class="feature-card">
+                    <img src="https://www.intelligent.com/wp-content/uploads/2013/06/chapter_pic02-1.jpg" alt="Personalized Study Plans">
+                    <h3>Personalized Study Plans</h3>
+                    <p>Tailored learning paths for your goals</p>
+                    <a href="/student_studyplans" class="btn">Create Plan</a>
+                </div>
+                <div class="feature-card">
+                    <img src="https://project-idea.org/wp-content/uploads/2021/06/ProjectIdea_PrimaryLogo_DarkText.svg" alt="Project Idea Generator">
+                    <h3>Project Idea Generator</h3>
+                    <p>Get creative project suggestions based on your interests</p>
+                    <a href="/student_projectideas" class="btn">Generate Ideas</a>
+                </div>
+                <div class="feature-card">
+                    <img src="https://www.pdfgear.com/how-to/img/ai-that-read-pdf-and-answers-questions-1.png" alt="PDF Questions & Answers">
+                    <h3>PDF Questions & Answers</h3>
+                    <p>Upload pdf solve doubts & questions</p>
+                    <a href="/student_pdfqa" class="btn">Upload PDF</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <div id="profile-sidebar" class="profile-sidebar">
+        <button id="close-profile" class="close-button">&times;</button>
+        
+        <div class="profile-header">
+            <img src="https://via.placeholder.com/150" alt="Student Avatar" class="avatar">
+            <h2>{{ student.name }}</h2>
+            <p>Student ID: {{ student.id }}</p>
+        </div>
+        
+        <div class="profile-info">
+            <p><strong>School:</strong> {{ student.school }}</p>
+            <p><strong>Date of Birth:</strong> {{ student.dob }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+        </div>
+        
+        <div class="subjects">
+            <h3>Interested Subjects</h3>
+            <ul>
+                {% for subject in student.subjects_interested %}
+                <li>{{ subject }}</li>
+                {% endfor %}
+            </ul>
+            
+            <h3>Subjects Needing Improvement</h3>
+            <ul>
+                {% for subject in student.subjects_needing_improvement %}
+                <li>{{ subject }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="performance-graph">
+            <h3>Performance Analytics</h3>
+            <canvas id="performanceChart"></canvas>
+        </div>
+        <a href="{{ url_for('index') }}" style="color: #ff4757; text-align: center;" ><h2>Log out</h2></a>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About SmartLearn</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect with Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">Facebook</a>
+                        <a href="#" class="social-icon">Twitter</a>
+                        <a href="#" class="social-icon">LinkedIn</a>
+                        <a href="#" class="social-icon">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 SmartLearn. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileIcon = document.getElementById('profile-icon');
+            const profileSidebar = document.getElementById('profile-sidebar');
+            const closeProfile = document.getElementById('close-profile');
+        
+            profileIcon.addEventListener('click', function() {
+                profileSidebar.classList.add('active');
+            });
+        
+            closeProfile.addEventListener('click', function() {
+                profileSidebar.classList.remove('active');
+            });
+        });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const profileIcon = document.getElementById('profile-icon');
+                const profileSidebar = document.getElementById('profile-sidebar');
+                const closeProfile = document.getElementById('close-profile');
+            
+                profileIcon.addEventListener('click', function() {
+                    profileSidebar.classList.add('active');
+                    renderPerformanceChart();
+                });
+            
+                closeProfile.addEventListener('click', function() {
+                    profileSidebar.classList.remove('active');
+                });
+            
+                function renderPerformanceChart() {
+                    const ctx = document.getElementById('performanceChart').getContext('2d');
+                    
+                    // Sample data
+                    const data = {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                        datasets: [{
+                            label: 'Performance Score',
+                            data: [65, 72, 68, 80, 75, 85],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            pointBackgroundColor: 'rgb(75, 192, 192)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(75, 192, 192)'
+                        }]
+                    };
+            
+                    const config = {
+                        type: 'line',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Weekly Performance'
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100,
+                                    title: {
+                                        display: true,
+                                        text: 'Score'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Week'
+                                    }
+                                }
+                            }
+                        }
+                    };
+            
+                    new Chart(ctx, config);
+                }
+            });
+            </script>
+</body>
+</html>

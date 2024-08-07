@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Page - SmartLearn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='student_course.css') }}">
+</head>
+<body>
+    <style> 
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+    
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+    
+    
+        .nav-bar {
+                background-color: #fff;
+                padding: 10px 0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+    
+            .nav-bar ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+    
+            .nav-bar li {
+                margin: 0 15px;
+            }
+    
+            .nav-bar a {
+                text-decoration: none;
+                color: var(--text-color);
+                font-weight: 600;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+            }
+    
+            .nav-bar a img {
+                height: 24px;
+                margin-right: 5px;
+            }
+            body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        #linkInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #summarizeBtn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #summarizeBtn:hover {
+            background-color: #45a049;
+        }
+        #summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+        }
+        #loading {
+            text-align: center;
+            display: none;
+        }
+        </style>
+    
+    <header>
+        <div class="">
+            <div class="header-content">
+                <div class="logo"><img src="../static/smart-learn.jpeg" alt="">SmartLearn</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for anything">
+                    <div class="ai-tools">
+                        <i class="fas fa-camera" title="Photo Question Answering"></i>
+                        <i class="fas fa-brain" title="AI Tutor"></i>
+                        <i class="fas fa-robot" title="AI Assistant"></i>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <span class="points-display">1500 pts</span>
+                    <div class="profile-icon">A</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="{{ url_for('student') }}"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">Home</a></li>
+            <li><a href="{{ url_for('student') }}#ai-powered-tools"><img src="https://www.kalupurbank.com/wp-content/uploads/2023/02/robot-chatbot-icon-sign-free-vector.webp" alt="Home">Ai Tools</a></li>
+            <li><a href="{{ url_for('homework') }}"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Homework">Homework</a></li>
+            <li><a href="{{ url_for('student_courses') }}"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Courses">Courses</a></li>
+            <li><a href="{{ url_for('speak') }}"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Speak With AI">Speak With AI</a></li>
+            <li><a href="{{ url_for('summarise_video') }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1280px-YouTube_full-color_icon_%282017%29.svg.png" alt="Ssummarise_video">summarise_video</a></li>
+        </ul>
+    </nav>
+        
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Video Summarizer</h1>
+        <input type="text" id="linkInput" placeholder="Paste YouTube video link here">
+        <button id="summarizeBtn">Summarize Video</button>
+        <div id="loading">Summarizing... Please wait.</div>
+        <div id="summary"></div>
+    </div>
+
+    <script>
+        document.getElementById('summarizeBtn').addEventListener('click', function() {
+            var link = document.getElementById('linkInput').value;
+            var summaryDiv = document.getElementById('summary');
+            var loadingDiv = document.getElementById('loading');
+
+            if (link) {
+                // Show loading message
+                loadingDiv.style.display = 'block';
+                summaryDiv.innerHTML = '';
+
+                // Here you would typically send the link to your backend for processing
+                // For this example, we'll simulate a delay and then show a mock summary
+                setTimeout(function() {
+                    loadingDiv.style.display = 'none';
+                    summaryDiv.innerHTML = '<h3>Summary:</h3><p>This is where the summary of the YouTube video would appear. Your model would process the video and generate a summary based on its content.</p>';
+                }, 2000); // Simulating a 2-second delay
+
+                // In a real application, you would replace the above with an actual API call:
+                /*
+                fetch('/api/summarize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({link: link}),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    loadingDiv.style.display = 'none';
+                    summaryDiv.innerHTML = '<h3>Summary:</h3><p>' + data.summary + '</p>';
+                })
+                .catch((error) => {
+                    loadingDiv.style.display = 'none';
+                    summaryDiv.innerHTML = '<p>Error: Unable to summarize video. Please try again.</p>';
+                });
+                */
+            } else {
+                summaryDiv.innerHTML = '<p>Please enter a valid YouTube link.</p>';
+            }
+        });
+    </script>
+    <script>
+    document.getElementById('summarizeBtn').addEventListener('click', function() {
+        var link = document.getElementById('linkInput').value;
+        var summaryDiv = document.getElementById('summary');
+        var loadingDiv = document.getElementById('loading');
+
+        if (link) {
+            loadingDiv.style.display = 'block';
+            summaryDiv.innerHTML = '';
+
+            fetch('/summarize_video', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({url: link}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingDiv.style.display = 'none';
+
+                    summaryDiv.innerHTML = '<h3>Summary:</h3><p>' + data.summary + '</p>';   
+
+
+            })
+            .catch((error) => {
+                loadingDiv.style.display = 'none';
+                summaryDiv.innerHTML = '<p>Error: Unable to summarize video. Please try again.</p>';
+            });
+        } else {
+            summaryDiv.innerHTML = '<p>Please enter a valid YouTube link.</p>';
+        }
+    });
+</script>
+</body>
+</html>

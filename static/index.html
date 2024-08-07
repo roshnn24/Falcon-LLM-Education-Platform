@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart-Learn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        #background-video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .header {
+            padding: 20px 0;
+        }
+        .logo-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .school-name {
+            font-size: 2.5em;
+            margin-top: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .login-text {
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .login-buttons {
+            margin-top: 10px;
+        }
+        .login-button {
+            background-color: rgba(52, 152, 219, 0.8);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 10px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .login-button:hover {
+            background-color: rgba(41, 128, 185, 0.9);
+            transform: translateY(-2px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #login-form button:hover {
+            background-color: #27ae60;
+        }
+        .info-section {
+            width: 100% ;
+            color: #ecf0f1;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #login-title {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        #login-instructions {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="../static/background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <div class="content" id="main-content">
+        <div class="header">
+            <div class="logo-circle">
+                <img src="../static/smart-learn.jpeg" alt="Smart Learn Logo">
+            </div>
+            <h1 class="school-name">Smart-Learn</h1>
+            
+            <!-- Login Text and Buttons -->
+            <p class="login-text">Login whether you are a student or teacher</p>
+            <div class="login-buttons">
+                <button class="login-button" onclick="showLogin('student')">Student Portal</button>
+                <button class="login-button" onclick="showLogin('teacher')">Teacher Portal</button>
+            </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="info-section">
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <p><strong>Email:</strong> contact@smartlearn.com</p>
+                <p><strong>Phone:</strong> (123) 456-7890</p>
+                <p><strong>Address:</strong> 123 Education Street, Knowledge City, ST 12345</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2 id="login-title"></h2>
+            <p id="login-instructions">Enter your details:</p>
+            <form id="login-form">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="login-hint" style="color: #666; font-size: 0.9em; margin-top: 10px;"></p>
+            <p id="login-error" style="color: red; display: none;">Invalid username or password. Please try again.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentLoginType = '';
+
+        function showLogin(type) {
+            currentLoginType = type;
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('login-modal').style.display = 'block';
+            document.getElementById('login-title').innerText = type.charAt(0).toUpperCase() + type.slice(1) + ' Login';
+            document.getElementById('login-error').style.display = 'none';
+            
+            // Set placeholders and hint based on login type
+            if (type === 'student') {
+                document.getElementById('username').placeholder = "Student ID (e.g., 'Alice Johnson')";
+                document.getElementById('password').placeholder = "Password (e.g., '12345')";
+                document.getElementById('login-hint').innerText = "Hint: Use your student ID as 'Alice Johnson' and default password is '12345'";
+            } else {
+                document.getElementById('username').placeholder = "Teacher ID (e.g., 'John Doe')";
+                document.getElementById('password').placeholder = "Password (e.g., '12345')";
+                document.getElementById('login-hint').innerText = "Hint: Use your Teacher ID as 'John Doe' and default password is '12345'";
+            }
+        }
+
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('main-content').style.display = 'flex';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/' + currentLoginType + '_login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: username, password: password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/' + currentLoginType;
+                } else {
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Close the modal if clicked outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('login-modal')) {
+                closeLogin();
+            }
+        }
+    </script>
+</body>
+</html>

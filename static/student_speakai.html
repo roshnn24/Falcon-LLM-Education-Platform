@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLearn - AI Voice Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --bg-color: rgba(255, 255, 255, 0.8);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+            transition: 1s opacity;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-bar {
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-bar li {
+            margin: 0 10px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar a img {
+            height: 24px;
+            margin-right: 5px;
+        }
+
+        .nav-bar a:hover {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            color: #fff;
+            margin: 0;
+        }
+
+        #chat-log {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow-y: scroll;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #user-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button-group {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #start-voice {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        #send-text {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: #e6f3ff;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+        }
+
+        #listening-indicator {
+            display: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="../static/Voice-chat.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <header>
+        <div class="header-content">
+            <div class="logo"><img src="../static/smart-learn.jpeg" alt="" style="text-align: left;">SmartLearn        </div>
+        
+        <h1>AI Voice Chat</h1></div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="{{ url_for('student') }}"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">Home</a></li>
+                <li><a href="{{ url_for('student') }}#ai-powered-tools"><img src="https://www.kalupurbank.com/wp-content/uploads/2023/02/robot-chatbot-icon-sign-free-vector.webp" alt="Home">Ai Tools</a></li>
+                <li><a href="{{ url_for('homework') }}"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Homework">Homework</a></li>
+                <li><a href="{{ url_for('student_courses') }}"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Courses">Courses</a></li>
+                <li><a href="{{ url_for('speak') }}"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Speak With AI">Speak With AI</a></li>
+                <li><a href="{{ url_for('summarise_video') }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1280px-YouTube_full-color_icon_%282017%29.svg.png" alt="Ssummarise_video">summarise_video</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div id="chat-log">
+            <div class="message ai-message"><strong>AI:</strong> I'm a speaking Assistant, interact with me to enhance your speaking skills.</div>
+        </div>
+        <textarea id="user-input" rows="3" placeholder="Type your message here or click 'Start Voice Input' to speak..."></textarea>
+        <div class="button-group">
+            <button id="start-voice"><i class="fas fa-microphone"></i> Start Voice Input</button>
+            <button id="send-text"><i class="fas fa-paper-plane"></i> Send Text</button>
+        </div>
+        <div id="listening-indicator">Listening... Speak now</div>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const userInput = document.getElementById('user-input');
+        const startVoiceBtn = document.getElementById('start-voice');
+        const sendTextBtn = document.getElementById('send-text');
+        const listeningIndicator = document.getElementById('listening-indicator');
+
+        let recognition;
+
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                listeningIndicator.style.display = 'block';
+                listeningIndicator.classList.add('pulse');
+                startVoiceBtn.disabled = true;
+            };
+
+            recognition.onend = function() {
+                listeningIndicator.style.display = 'none';
+                listeningIndicator.classList.remove('pulse');
+                startVoiceBtn.disabled = false;
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = Array.from(event.results)
+                    .map(result => result[0].transcript)
+                    .join('');
+
+                userInput.value = transcript;
+
+                if (event.results[0].isFinal) {
+                    sendMessage(transcript);
+                    recognition.stop();
+                }
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                listeningIndicator.style.display = 'none';
+                listeningIndicator.classList.remove('pulse');
+                startVoiceBtn.disabled = false;
+            };
+        } else {
+            console.log('Speech recognition not supported');
+            startVoiceBtn.disabled = true;
+        }
+
+        startVoiceBtn.addEventListener('click', () => {
+            recognition.start();
+        });
+
+        sendTextBtn.addEventListener('click', () => {
+            sendMessage(userInput.value);
+        });
+
+        function sendMessage(message) {
+            if (message.trim() === '') return;
+
+            appendToChatLog('You', message);
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendToChatLog('AI', data.response);
+                speakResponse(data.response);
+            })
+            .catch(error => console.error('Error:', error));
+
+            userInput.value = '';
+        }
+
+        function appendToChatLog(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender === 'You' ? 'user-message' : 'ai-message');
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatLog.appendChild(messageElement);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function speakResponse(message) {
+            const speech = new SpeechSynthesisUtterance(message);
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>

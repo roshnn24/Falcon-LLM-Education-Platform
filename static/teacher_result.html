@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Evaluation Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .result-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .back-link, .grade-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-link:hover, .grade-button:hover {
+            background-color: #2980b9;
+        }
+        #grade-result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exam Evaluation Result</h1>
+    <div class="result-container">
+        <pre>{{ result }}</pre>
+    </div>
+    <button onclick="assignGrade()" class="grade-button">Assign Grade</button>
+    <div id="grade-result"></div>
+    <a href="{{ url_for('eval') }}" class="back-link">Upload another set of files</a>
+
+    <script>
+        function assignGrade() {
+            fetch('/assign_grade', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ result: document.querySelector('pre').textContent }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('grade-result').innerHTML = `
+                    Total Score: ${data.max_possible_score}/${data.total_score}<br>
+                    Percentage: ${data.percentage.toFixed(2)}%<br>
+                    Grade: ${data.grade}
+                `;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

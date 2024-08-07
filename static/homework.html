@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLearn - AI-Powered Education Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='student_homework.css') }}">
+    
+</head>
+<body>
+    <style>
+    .logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+    .spinner {
+        text-align: center;
+        font-size: 1.5em;
+        margin-top: 10px;
+    }
+
+    .logo img {
+        height: 40px;
+        margin-right: 10px;
+    }
+
+
+    .nav-bar {
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-bar li {
+            margin: 0 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar a img {
+            height: 24px;
+            margin-right: 5px;
+        }
+
+    </style>
+   
+   <body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../static/smart-learn.jpeg" alt="">SmartLearn
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for anything">
+                    <div class="ai-tools">
+                        <i class="fas fa-camera" title="Photo Question Answering"></i>
+                        <i class="fas fa-brain" title="AI Tutor"></i>
+                        <i class="fas fa-robot" title="AI Assistant"></i>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <span class="points-display">1500 pts</span>
+                    <div class="profile-icon">A</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="{{ url_for('student') }}"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">Home</a></li>
+            <li><a href="{{ url_for('student') }}#ai-powered-tools"><img src="https://www.kalupurbank.com/wp-content/uploads/2023/02/robot-chatbot-icon-sign-free-vector.webp" alt="Home">Ai Tools</a></li>
+            <li><a href="{{ url_for('homework') }}"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Homework">Homework</a></li>
+            <li><a href="{{ url_for('student_courses') }}"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Courses">Courses</a></li>
+            <li><a href="{{ url_for('speak') }}"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Speak With AI">Speak With AI</a></li>
+            <li><a href="{{ url_for('summarise_video') }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1280px-YouTube_full-color_icon_%282017%29.svg.png" alt="Ssummarise_video">summarise_video</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Homework & Assignments</h1>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Pending</button>
+                <button class="filter-btn">Completed</button>
+            </div>
+
+            <div class="homework-grid">
+                <div class="homework-item">
+                    <h3>Math Assignment: Calculus Basics</h3>
+                    <p><i class="fas fa-calendar"></i> Due: July 30, 2024</p>
+                    <p><i class="fas fa-clock"></i> Estimated time: 30 min</p>
+                    <a href="#" class="btn" onclick="showQuestions('calculus')">Start Assignment</a>
+                    <div class="questions" id="calculus">
+                        <div class="spinner" id="loading-spinner" style="display: none;">
+                            <i class="fas fa-circle-notch fa-spin"></i> Loading...
+                        </div>
+                    </div>
+                </div>
+                <div class="homework-item">
+                    <h3>Science Project: Ecosystem Model</h3>
+                    <p><i class="fas fa-calendar"></i> Due: August 5, 2024</p>
+                    <p><i class="fas fa-clock"></i> Estimated time: 4 hours</p>
+                    <a href="#" class="btn" onclick="showQuestions('ecosystem')">Continue Project</a>
+                    <div class="questions" id="ecosystem"></div>
+                </div>
+                <div class="homework-item completed">
+                    <h3>History Essay: Industrial Revolution</h3>
+                    <p><i class="fas fa-check-circle"></i> Completed</p>
+                    <p><i class="fas fa-star"></i> Score: 95/100</p>
+                    <a href="#" class="btn" onclick="showQuestions('industrial')">View Feedback</a>
+                    <div class="questions" id="industrial"></div>
+                </div>
+                <div class="homework-item">
+                    <h3>Language Arts: Book Report</h3>
+                    <p><i class="fas fa-calendar"></i> Due: August 10, 2024</p>
+                    <p><i class="fas fa-clock"></i> Estimated time: 3 hours</p>
+                    <a href="#" class="btn" onclick="showQuestions('bookReport')">Start Report</a>
+                    <div class="questions" id="bookReport"></div>
+                </div>
+                <div class="homework-item completed">
+                    <h3>Computer Science: Python Quiz</h3>
+                    <p><i class="fas fa-check-circle"></i> Completed</p>
+                    <p><i class="fas fa-star"></i> Score: 88/100</p>
+                    <a href="#" class="btn" onclick="showQuestions('pythonQuiz')">Review Quiz</a>
+                    <div class="questions" id="pythonQuiz"></div>
+                </div>
+                <div class="homework-item">
+                    <h3>Physics Lab: Gravity Experiment</h3>
+                    <p><i class="fas fa-calendar"></i> Due: August 15, 2024</p>
+                    <p><i class="fas fa-clock"></i> Estimated time: 2 hours</p>
+                    <a href="#" class="btn" onclick="showQuestions('gravityExperiment')">Start Lab</a>
+                    <div class="questions" id="gravityExperiment"></div>
+                </div>
+                <div class="homework-item">
+                    <h3>Chemistry: Periodic Table Quiz</h3>
+                    <p><i class="fas fa-calendar"></i> Due: August 20, 2024</p>
+                    <p><i class="fas fa-clock"></i> Estimated time: 1 hour</p>
+                    <a href="#" class="btn" onclick="showQuestions('periodicQuiz')">Start Quiz</a>
+                    <div class="questions" id="periodicQuiz"></div>
+                </div>
+                <div class="homework-item">
+                    <h3>Art Project: Self-Portrait</h3>
+                    <p><i class="fas fa-calendar"></i> Due: August 25, 2024</p>
+                    <p><i class="fas fa-clock"></i> Estimated time: 5 hours</p>
+                    <a href="#" class="btn" onclick="showQuestions('selfPortrait')">Begin Project</a>
+                    <div class="questions" id="selfPortrait"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Predefined static questions, marks, and feedback for each assignment
+        const questions = {
+            calculus: {
+                questions: [
+                    "What is the derivative of sin(x)?",
+                    "Explain the concept of a limit in calculus."
+                ]
+            },
+            ecosystem: {
+                questions: [
+                    "Describe the energy flow in an ecosystem.",
+                    "What are the main components of an ecosystem?"
+                ]
+            },
+            industrial: {
+                questions: [],
+                mark: 95,
+                feedback: "Excellent analysis and well-structured essay on the Industrial Revolution."
+            },
+            bookReport: {
+                questions: [
+                    "Summarize the main plot of the book.",
+                    "What are the key themes explored in the book?"
+                ]
+            },
+            pythonQuiz: {
+                questions: [],
+                mark: 88,
+                feedback: "Good understanding of Python basics. Pay more attention to edge cases."
+            },
+            gravityExperiment: {
+                questions: [
+                    "What is the formula for gravitational force?",
+                    "Describe the experiment setup for measuring gravity."
+                ]
+            },
+            periodicQuiz: {
+                questions: [
+                    "What is the atomic number of Oxygen?",
+                    "Explain the significance of periods and groups in the periodic table."
+                ]
+            },
+            selfPortrait: {
+                questions: [
+                    "What materials will you use for your self-portrait?",
+                    "Describe your initial concept for the self-portrait."
+                ]
+            }
+        };
+
+        // Function to display questions and feedback
+        function showQuestions(id) {
+            const container = document.getElementById(id);
+            container.innerHTML = ''; // Clear any previous content
+
+            const assignment = questions[id];
+
+            if (assignment.questions && assignment.questions.length > 0) {
+                assignment.questions.forEach(question => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question');
+                    questionDiv.textContent = question;
+                    container.appendChild(questionDiv);
+                });
+            }
+
+            if (assignment.mark !== undefined && assignment.feedback !== undefined) {
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.classList.add('feedback');
+                feedbackDiv.innerHTML = `<strong>Mark:</strong> ${assignment.mark}/100<br><strong>Feedback:</strong> ${assignment.feedback}`;
+                container.appendChild(feedbackDiv);
+            }
+        }
+
+        // Simple filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const homeworkItems = document.querySelectorAll('.homework-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.textContent.toLowerCase();
+                
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                homeworkItems.forEach(item => {
+                    if (filter === 'all' || 
+                        (filter === 'pending' && !item.classList.contains('completed')) ||
+                        (filter === 'completed' && item.classList.contains('completed'))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        function showQuestions(assignmentId) {
+        const questionsDiv = document.getElementById(assignmentId);
+        const loadingSpinner = document.getElementById('loading-spinner');
+
+        loadingSpinner.style.display = 'block';
+
+        fetch('/generate-questions-hw')
+            .then(response => response.json())
+            .then(data => {
+                questionsDiv.innerHTML = '';
+                loadingSpinner.style.display = 'none';
+
+                data.questions.forEach((question, index) => {
+                    const questionElement = document.createElement('div');
+                    questionElement.innerHTML = `
+                        <p>${index + 1}. ${question}</p>
+                        <textarea id="answer-${index}" rows="3" cols="50"></textarea>
+                    `;
+                    questionsDiv.appendChild(questionElement);
+                });
+
+                const submitButton = document.createElement('button');
+                submitButton.textContent = 'Submit Answers';
+                submitButton.onclick = () => submitAnswers(assignmentId, data.questions);
+                questionsDiv.appendChild(submitButton);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                loadingSpinner.style.display = 'none';
+                questionsDiv.innerHTML = '<p>Error loading questions. Please try again.</p>';
+            });
+    }
+
+    function submitAnswers(assignmentId, questions) {
+        const questionsDiv = document.getElementById(assignmentId);
+        const answers = questions.map((_, index) => document.getElementById(`answer-${index}`).value);
+
+        questionsDiv.innerHTML = '<p>Evaluating answers...</p>';
+
+        fetch('/evaluate-answers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({questions, answers}),
+        })
+        .then(response => response.json())
+        .then(data => {
+            displayEvaluations(assignmentId, questions, answers, data.evaluations);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            questionsDiv.innerHTML = '<p>Error evaluating answers. Please try again.</p>';
+        });
+    }
+
+    function displayEvaluations(assignmentId, questions, answers, evaluations) {
+        const questionsDiv = document.getElementById(assignmentId);
+        questionsDiv.innerHTML = '<h3>Evaluation Results:</h3>';
+
+        questions.forEach((question, index) => {
+            const answer = answers[index];
+            const evaluation = evaluations[index];
+
+            const resultElement = document.createElement('div');
+            resultElement.innerHTML = `
+                <p><strong>Question ${index + 1}:</strong> ${question}</p>
+                <p><strong>Your Answer:</strong> ${answer}</p>
+                <p><strong>Evaluation:</strong></p>
+                <pre>${evaluation}</pre>
+            `;
+            questionsDiv.appendChild(resultElement);
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Evaluation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent for readability */
+            --text-color: #333;
+            --input-bg: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-color: var(--background-color);
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Make sure the video is behind everything else */
+        }
+
+        .header {
+            background-color: var(--secondary-color);
+            padding: 20px 0;
+            text-align: center;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .back-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .logo i {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 1;
+        }
+
+        form {
+            display: grid;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        select:focus, input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        input[type="submit"] {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .input-section {
+            display: none;
+            background-color: rgba(249, 249, 249, 0.8);
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        #max-marks-section {
+            margin-top: 20px;
+        }
+
+        .icon-input {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .icon-input i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+
+        .icon-input input, .icon-input select, .icon-input textarea {
+            flex: 1;
+        }
+
+        .input-section .icon-input {
+            margin-bottom: 20px;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-section input[type="file"] {
+            height: 40px;
+        }
+
+        input[type="file"] {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            visibility: hidden;
+            width: 0;
+        }
+
+        input[type="file"]::before {
+            content: 'Choose file';
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 3px;
+            padding: 5px 8px;
+            outline: none;
+            white-space: nowrap;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        input[type="file"]:hover::before {
+            background-color: #2980b9;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay loop muted playsinline>
+        <source src="../static/Eval.mp4" type="video/mp4">
+        <source src="../static/Eval.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>
+
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>AI Grading System</h1>
+        </div>
+    </header>
+    <a href="teacher" class="back-button" title="Back to Home">
+        <i class="fas fa-arrow-left"></i>
+        </a>
+
+    <div class="container">
+        <form action="/eval" method="post" enctype="multipart/form-data">
+            <div class="icon-input">
+                <i class="fas fa-clipboard-list"></i>
+                <select name="input_type" id="input_type" onchange="showInputForm()">
+                    <option value="">-- Select an option --</option>
+                    <option value="file">File Upload</option>
+                    <option value="text">Text Input</option>
+                </select>
+            </div>
+
+            <div id="file-input" class="input-section">
+                <div class="icon-input">
+                    <i class="fas fa-file-alt"></i>
+                    <label for="question_file">Question Paper:</label>
+                    <input type="file" name="question_file" id="question_file" accept=".pdf,.jpeg,.jpg,.png">
+                </div>
+
+                <div class="icon-input">
+                    <i class="fas fa-file-signature"></i>
+                    <label for="answer_file">Answer Paper:</label>
+                    <input type="file" name="answer_file" id="answer_file" accept=".pdf,.jpeg,.jpg,.png">
+                </div>
+            </div>
+
+            <div id="text-input" class="input-section">
+                <div class="icon-input">
+                    <i class="fas fa-question"></i>
+                    <textarea name="question_text" id="question_text" rows="6" placeholder="Enter your questions here..."></textarea>
+                </div>
+
+                <div class="icon-input">
+                    <i class="fas fa-pencil-alt"></i>
+                    <textarea name="answer_text" id="answer_text" rows="6" placeholder="Enter your answers here..."></textarea>
+                </div>
+            </div>
+
+            <div id="max-marks-section" class="icon-input">
+                <i class="fas fa-star"></i>
+                <input type="text" name="max_marks" id="max_marks" placeholder="Enter maximum marks" required>
+            </div>
+
+            <input type="submit" value="Submit and Evaluate">
+        </form>
+    </div>
+
+    <script>
+        function showInputForm() {
+            const inputType = document.getElementById('input_type').value;
+            document.getElementById('file-input').style.display = inputType === 'file' ? 'block' : 'none';
+            document.getElementById('text-input').style.display = inputType === 'text' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
