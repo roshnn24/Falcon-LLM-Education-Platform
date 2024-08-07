@@ -111,7 +111,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-For more information, please reach out to us at [contact@smartsystem.com](mailto:roshauninfant@gmail.com).
+For more information, please reach out to us at [roshauninfant@gmail.com](mailto:roshauninfant@gmail.com).
 
 ---
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
