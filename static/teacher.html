@@ -1,0 +1,1263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - ABC Group of Schools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: rgba(236, 240, 241, 0.8);
+            --text-color: #333;
+            --card-background: #fff;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: url('https://i.pinimg.com/736x/d0/b1/39/d0b1395ab921f995d3340b4a45007dd2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .teacher-portal {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .dashboard-card h3 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .dashboard-card p {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 0;
+        }
+
+        .dashboard-card i {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #student-list {
+            background: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #student-list h3 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .student-card {
+            background: var(--background-color);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-card h4 {
+            margin: 0 0 10px;
+            color: var(--secondary-color);
+        }
+
+        .student-card p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        #timetable-generator {
+            margin-top: 40px;
+            background: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #timetable-generator h3 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #timetable-generator form {
+            display: grid;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #timetable-generator label {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        #timetable-generator input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        #timetable-generator button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            margin-top: 20px;
+        }
+
+        #timetable-generator button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        #timetable-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            white-space: pre-wrap;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+                .navbar {
+            background-color: var(--primary-color);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            margin: 0 15px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: var(--secondary-color);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #generate-ai-report {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #generate-ai-report:hover {
+            background-color: #2980b9;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1340px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            background-color: rgba(255,255,255,0.2);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .search-bar input:focus {
+            background-color: rgba(255,255,255,0.3);
+            outline: none;
+        }
+
+        .ai-tools {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ai-tools i {
+            font-size: 20px;
+            margin-left: 15px;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .ai-tools i:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .points-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 20px;
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-bar {
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-bar li {
+            margin: 0 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 25px 0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://source.unsplash.com/random/1600x900?education') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background-color: #ff4757;
+            transform: translateY(-3px);
+        }
+
+        .categories, .features, .learning-section {
+            padding: 60px 0;
+            background-color: #fff;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .category-list, .feature-grid, .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-item, .feature-card, .learning-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-item:hover, .feature-card:hover, .learning-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.feature-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.feature-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            position: relative;
+            max-width: 900px;
+        }
+.profile-sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.feature-card h3 {
+    margin: 10px 0;
+}
+
+.feature-card p {
+    margin: 10px 0 20px;
+}
+
+.feature-card .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+#subjects-container {
+    max-width: 600px;
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 30px;
+    background: var(--card-background);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the items horizontally */
+    gap: 30px; /* Add space between the items */
+}
+
+#subjects-container h3 {
+    font-size: 1.8em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.subject-card {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+}
+
+.subject-card h4 {
+    font-size: 1.5em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.subject-card p {
+    font-size: 1em;
+    color: var(--secondary-color);
+    margin: 0;
+}
+
+.spinner {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .timetable-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .day-table {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        width: calc(33.33% - 20px);
+        margin-bottom: 20px;
+    }
+
+    .day-table h3 {
+        color: var(--primary-color);
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .day-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .day-table th, .day-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .day-table th {
+        background-color: #f2f2f2;
+    }
+
+    @media (max-width: 768px) {
+        .day-table {
+            width: 100%;
+        }
+    } .timetable-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .day-table {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        width: calc(33.33% - 20px);
+        margin-bottom: 20px;
+    }
+     html {
+        scroll-behavior: smooth;
+    }
+
+    .day-table h3 {
+        color: var(--primary-color);
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .day-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .loading-circle {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-left: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .day-table th, .day-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .day-table th {
+        background-color: #f2f2f2;
+    }
+
+    @media (max-width: 768px) {
+        .day-table {
+            width: 100%;
+        }
+    }
+
+@media (max-width: 768px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+    </style>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">SmartLearn</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for anything">
+                    <div class="ai-tools">
+                        <i class="fas fa-camera" title="Photo Question Answering"></i>
+                        <i class="fas fa-brain" title="AI Tutor"></i>
+                        <i class="fas fa-robot" title="AI Assistant"></i>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    
+                    <div class="profile-icon" id="profile-icon">{{ teacher.name[0] }}</div>
+
+                    <div id="profile-sidebar" class="profile-sidebar">
+                        <button id="close-profile" class="close-button">&times;</button>
+                        
+                        <div class="profile-header">
+                            <img src="https://via.placeholder.com/150" alt="Teacher Avatar" class="avatar">
+                            <h2>{{ teacher.name }}</h2>
+                            <p>Teacher ID: {{ teacher.id }}</p>
+                        </div>
+                        
+                        <div class="profile-info">
+                            <p><strong>School:</strong> {{ teacher.school }}</p>
+                            <p><strong>Date of Birth:</strong> {{ teacher.dob }}</p>
+                            <p><strong>Email:</strong> {{ teacher.email }}</p>
+                        </div>
+                        
+                        <div class="subjects">
+                            <h3>Subjects Taught</h3>
+                            <ul>
+                                {% for subject in teacher.subjects_taught %}
+                                <li>{{ subject }}</li>
+                                {% endfor %}
+                            </ul>
+                            
+                            <h3>Classes</h3>
+                            <ul>
+                                {% for class in teacher.classes %}
+                                <li>{{ class }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        <div class="performance-graph">
+                            <h3>Weekly Class Performance</h3>
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                
+                        <div class="additional-info">
+                            <h3>Qualifications</h3>
+                            <ul>
+                                {% for qualification in teacher.qualifications %}
+                                <li>{{ qualification }}</li>
+                                {% endfor %}
+                            </ul>
+                
+                            <h3>Years of Experience</h3>
+                            <p>{{ teacher.years_of_experience }}</p>
+                        </div>
+                        
+                        <a href="{{ url_for('index') }}" style="color: #ff4757; text-align: center;"><h2>Log out</h2></a>
+                    </div>
+                
+    </header>
+
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="{{ url_for('teacher') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('generate_paper') }}"><i class="fas fa-file-alt"></i> Generate Paper</a></li>
+            <li><a href="{{ url_for('eval') }}"><i class="fas fa-check-circle"></i> Evaluate</a></li>
+            <li><a href="#student-list"><i class="fas fa-chart-bar"></i> Generate Report</a></li>
+            <li><a href="#timetable-generator"><i class="fas fa-calendar-alt"></i> Generate Timetable</a></li>
+            <li><a href="{{ url_for('ai_timetable') }}"><i class="fas fa-calendar-alt"></i>Slow Learner</a></li>
+        </ul>
+    </nav>
+    
+
+    <div class="teacher-portal fade-in">
+        <div class="header">
+            <h1>Teacher Portal</h1>
+            <p>Welcome, <span id="teacher-name-display"></span>!</p>
+        </div>
+        <div class="dashboard">
+            <div class="dashboard-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Total Students</h3>
+                <p id="total-students"></p>
+            </div>
+            <div class="dashboard-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Average CGPA</h3>
+                <p id="average-cgpa"></p>
+            </div>
+            <div class="dashboard-card">
+                <i class="fas fa-clipboard-check"></i>
+                <h3>Average AI Test Score</h3>
+                <p id="average-ai-score"></p>
+            </div>
+        </div>
+        <div id="student-list">
+            <h3>Student List</h3>
+            <div class="student-grid" id="student-grid"></div>
+        </div>
+        <div id="student-details" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="student-expanded-info"></div>
+                <button id="generate-ai-report">Generate AI Report</button>
+            </div>
+        </div>
+        <div class="button-container">
+            <button onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+        <div id="timetable-generator">
+            <h3>Generate Timetable</h3>
+            <form id="timetable-form">
+                <label for="hours-per-day">Hours per Day:</label>
+                <input type="number" id="hours-per-day" name="hours_per_day" required>
+
+                <label for="days-per-week">Days per Week:</label>
+                <input type="number" id="days-per-week" name="days_per_week" required>
+
+                <label for="semester-end-date">Semester End Date:</label>
+                <input type="date" id="semester-end-date" name="semester_end_date" required>
+
+                <label for="number-of-subjects">Number of Subjects:</label>
+                <input type="number" id="number-of-subjects" name="number_of_subjects" required>
+
+                <div id="subjects-container">
+                    <!-- Subject inputs will be added here dynamically -->
+                </div>
+                <button type="submit">Generate Timetable</button>
+                <div id="timetable-spinner" class="spinner"></div>
+            </form>
+            <div id="timetable-result"></div>
+        </div>
+    </div>
+        
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const teacherName = localStorage.getItem('teacherName');
+            document.getElementById('teacher-name-display').textContent = teacherName || 'Teacher';
+
+            const studentGrid = document.getElementById('student-grid');
+            const studentDetails = document.getElementById('student-details');
+            const studentExpandedInfo = document.getElementById('student-expanded-info');
+            const closeBtn = document.querySelector('.close');
+            const generateAIReportBtn = document.getElementById('generate-ai-report');
+
+            fetch('/get_students')
+                .then(response => response.json())
+                .then(students => {
+                    let totalCGPA = 0;
+                    let totalAIScore = 0;
+
+                    students.forEach(student => {
+                        const studentCard = document.createElement('div');
+                        studentCard.className = 'student-card';
+                        studentCard.innerHTML = `
+                            <h4>${student.name}</h4>
+                            <p>Age: ${student.age}</p>
+                            <p>CGPA: ${student.cgpa}</p>
+                            <p>Course: ${student.course_pursuing}</p>
+                            <p>Assigned Test Score: ${student.assigned_test_score}</p>
+                        `;
+                        studentCard.addEventListener('click', () => showStudentDetails(student));
+                        studentGrid.appendChild(studentCard);
+
+                        totalCGPA += student.cgpa;
+                        totalAIScore += student.ai_test_score;
+                    });
+
+                    const totalStudents = students.length;
+                    const averageCGPA = totalStudents > 0 ? totalCGPA / totalStudents : 0;
+                    const averageAIScore = totalStudents > 0 ? totalAIScore / totalStudents : 0;
+
+                    document.getElementById('total-students').textContent = totalStudents;
+                    document.getElementById('average-cgpa').textContent = averageCGPA.toFixed(2);
+                    document.getElementById('average-ai-score').textContent = averageAIScore.toFixed(2);
+                })
+                .catch(error => {
+                    console.error('Error fetching student data:', error);
+                });
+
+            function showStudentDetails(student) {
+                studentExpandedInfo.innerHTML = `
+                    <h2>${student.name}</h2>
+                    <p>Age: ${student.age}</p>
+                    <p>CGPA: ${student.cgpa}</p>
+                    <p>Course: ${student.course_pursuing}</p>
+                    <p>Assigned Test Score: ${student.assigned_test_score}</p>
+                    <p>AI Test Score: ${student.ai_test_score}</p>
+                    <p>Interests: ${student.interests}</p>
+                    <p>Difficulty in: ${student.difficulty_in}</p>
+                    <p>Courses Taken: ${student.courses_taken}</p>
+                `;
+                studentExpandedInfo.dataset.studentData = JSON.stringify(student);
+                studentDetails.style.display = 'block';
+            }
+
+            closeBtn.onclick = function() {
+                studentDetails.style.display = 'none';
+            }
+
+            generateAIReportBtn.onclick = function() {
+                const studentData = JSON.parse(studentExpandedInfo.dataset.studentData);
+
+                const loadingCircle = document.createElement('div');
+                loadingCircle.className = 'loading-circle';
+                this.appendChild(loadingCircle);
+
+                loadingCircle.style.display = 'inline-block';
+                this.disabled = true;
+
+                fetch('/generate_report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(studentData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const reportDiv = document.createElement('div');
+                    reportDiv.innerHTML = `<h3>AI Generated Report</h3><p>${data.report}</p>`;
+                    studentExpandedInfo.appendChild(reportDiv);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Error generating AI report');
+                })
+                .finally(() => {
+                    loadingCircle.style.display = 'none';
+                    this.disabled = false;
+                    this.removeChild(loadingCircle);
+                });
+            };
+
+            window.onclick = function(event) {
+                if (event.target == studentDetails) {
+                    studentDetails.style.display = 'none';
+                }
+            }
+                            const numberOfSubjectsInput = document.getElementById('number-of-subjects');
+                numberOfSubjectsInput.addEventListener('change', function() {
+                    const subjectsContainer = document.getElementById('subjects-container');
+                    subjectsContainer.innerHTML = '';
+
+                    const numberOfSubjects = parseInt(this.value);
+                    for (let i = 0; i < numberOfSubjects; i++) {
+                        const subjectLabel = document.createElement('label');
+                        subjectLabel.textContent = `Subject ${i + 1}:`;
+
+                        const subjectInput = document.createElement('input');
+                        subjectInput.type = 'text';
+                        subjectInput.name = `subject_${i + 1}`;
+                        subjectInput.required = true;
+
+                        subjectsContainer.appendChild(subjectLabel);
+                        subjectsContainer.appendChild(subjectInput);
+                    }
+                });
+
+                // Handle form submission for generating the timetable
+                const timetableForm = document.getElementById('timetable-form');
+                const timetableResult = document.getElementById('timetable-result');
+
+                timetableForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(timetableForm);
+                    const subjects = [];
+                    for (let [key, value] of formData.entries()) {
+                        if (key.startsWith('subject_')) {
+                            subjects.push(value);
+                        }
+                    }
+
+                    const timetableData = {
+                        hours_per_day: formData.get('hours_per_day'),
+                        days_per_week: formData.get('days_per_week'),
+                        semester_end_date: formData.get('semester_end_date'),
+                        subjects: subjects
+                    };
+
+                    const spinner = document.getElementById('timetable-spinner');
+                    const submitButton = timetableForm.querySelector('button[type="submit"]');
+
+                    // Show spinner and disable submit button
+                    spinner.style.display = 'block';
+                    submitButton.disabled = true;
+                    submitButton.style.opacity = '0.5';
+
+                    fetch('/generate_timetable', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(timetableData)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to generate timetable');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            timetableResult.textContent = 'Error: ' + data.error;
+                        } else {
+                            timetableResult.textContent = data.timetable;
+                        }
+                    })
+                    .catch(error => {
+                        timetableResult.textContent = 'Error: ' + error.message;
+                    })
+                    .finally(() => {
+                        // Hide spinner and re-enable submit button
+                        spinner.style.display = 'none';
+                        submitButton.disabled = false;
+                        submitButton.style.opacity = '1';
+                    });
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const profileIcon = document.getElementById('profile-icon');
+    const profileSidebar = document.getElementById('profile-sidebar');
+    const closeProfile = document.getElementById('close-profile');
+
+    profileIcon.addEventListener('click', function() {
+        profileSidebar.style.display = 'block';
+    });
+
+    closeProfile.addEventListener('click', function() {
+        profileSidebar.style.display = 'none';
+    });
+});
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const profileIcon = document.getElementById('profile-icon');
+                const profileSidebar = document.getElementById('profile-sidebar');
+                const closeProfile = document.getElementById('close-profile');
+            
+                profileIcon.addEventListener('click', function() {
+                    profileSidebar.classList.add('active');
+                    renderPerformanceChart();
+                });
+            
+                closeProfile.addEventListener('click', function() {
+                    profileSidebar.classList.remove('active');
+                });
+            
+                function renderPerformanceChart() {
+                    const ctx = document.getElementById('performanceChart').getContext('2d');
+                    
+                    // Sample data
+                    const data = {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                        datasets: [{
+                            label: 'Performance Score',
+                            data: [65, 72, 68, 80, 75, 85],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            pointBackgroundColor: 'rgb(75, 192, 192)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(75, 192, 192)'
+                        }]
+                    };
+            
+                    const config = {
+                        type: 'line',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Weekly Performance'
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100,
+                                    title: {
+                                        display: true,
+                                        text: 'Score'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Week'
+                                    }
+                                }
+                            }
+                        }
+                    };
+            
+                    new Chart(ctx, config);
+                }
+            });
+            
+            </script>
+            <script>
+                // Extract weekly performance data from the template
+                const weeklyPerformanceData = JSON.parse('{{ teacher.weekly_class_performance|tojson|safe }}');
+            
+                // Prepare data for Chart.js
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                const labels = Object.keys(weeklyPerformanceData);
+                const datasets = labels.map(label => ({
+                    label: label,
+                    data: weeklyPerformanceData[label],
+                    borderColor: getRandomColor(),
+                    fill: false
+                }));
+            
+                const performanceChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 7}, (_, i) => `Week ${i + 1}`),
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Weeks'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Performance Score'
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            
+                function getRandomColor() {
+                    const letters = '0123456789ABCDEF';
+                    let color = '#';
+                    for (let i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+            </script>
+
+            
+</body>
+</html>
+
