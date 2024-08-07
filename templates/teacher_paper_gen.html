@@ -11,7 +11,7 @@
             --secondary-color: #2c3e50;
             --background-color: #f5f6fa;
             --text-color: #333;
-            --card-background: rgba(255, 255, 255, 0.8);
+            --card-background: #fff;
         }
 
         body {
@@ -21,33 +21,15 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .background-video {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            object-fit: cover;
         }
 
         .container {
-            max-width: 1200px;
-            width: 95%;
+            max-width: 800px;
             margin: 40px auto;
             padding: 30px;
             background: var(--card-background);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
         h1 {
@@ -57,22 +39,9 @@
             font-size: 2.5em;
         }
 
-        .content-wrapper {
-            display: flex;
-            gap: 30px;
-        }
-
-        .form-container {
-            flex: 1;
-        }
-
-        .generated-paper-container {
-            flex: 1;
-        }
-
         form {
             display: grid;
-            gap: 15px;
+            gap: 20px;
         }
 
         label {
@@ -85,22 +54,22 @@
         input[type="text"],
         input[type="file"] {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         input[type="file"] {
-            padding: 8px 0;
+            padding: 10px 0;
         }
 
         button {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 12px 20px;
+            font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -111,13 +80,11 @@
         }
 
         .generated-paper {
-            margin-top: 0;
+            margin-top: 40px;
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 10px;
             border: 1px solid #e0e0e0;
-            height: 100%;
-            overflow-y: auto;
         }
 
         .generated-paper h2 {
@@ -125,108 +92,119 @@
             margin-bottom: 20px;
         }
 
-        @media (max-width: 900px) {
-            .content-wrapper {
-                flex-direction: column;
-            }
-        }
-
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
             }
         }
-      .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #3498db;
-            color: white;
-            border: none;
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading-icon {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
 
-        .back-button:hover {
-            background-color: #2980b9;
-            transform: scale(1.1);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .back-button i {
-            transition: transform 0.3s ease;
+        .part {
+            margin-bottom: 20px;
         }
 
-        .back-button:hover i {
-            transform: translateX(-5px);
+        .part h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .question {
+            margin-left: 20px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <video class="background-video" autoplay muted loop>
-        <source src="../static/paper.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <a href="teacher" class="back-button" title="Back to Home">Back
-        <i class="fas fa-arrow-left"></i>
-        </a>
-
-
     <div class="container">
         <h1>Question Paper Generator</h1>
-        <div class="content-wrapper">
-            <div class="form-container">
-                <form action="/generate-paper" method="post" enctype="multipart/form-data">
-                    <div>
-                        <label for="no_of_questions">Number of questions:</label>
-                        <input type="number" id="no_of_questions" name="no_of_questions" required>
-                    </div>
-
-                    <div>
-                        <label for="total_marks">Total marks:</label>
-                        <input type="number" id="total_marks" name="total_marks" required>
-                    </div>
-
-                    <div>
-                        <label for="no_of_parts">Number of parts:</label>
-                        <input type="number" id="no_of_parts" name="no_of_parts" required>
-                    </div>
-
-                    <div>
-                        <label for="marks_per_part">Marks per part:</label>
-                        <input type="number" id="marks_per_part" name="marks_per_part" required>
-                    </div>
-
-                    <div>
-                        <label for="test_duration">Test duration:</label>
-                        <input type="text" id="test_duration" name="test_duration" placeholder="e.g., 2 hours" required>
-                    </div>
-
-                    <div>
-                        <label for="pdf_file">Curriculum PDF:</label>
-                        <input type="file" id="pdf_file" name="pdf_file" accept="application/pdf" required>
-                    </div>
-
-                    <button type="submit">Generate Question Paper</button>
-                </form>
+        <form action="/generate-paper" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="no_of_questions">Number of questions:</label>
+                <input type="number" id="no_of_questions" name="no_of_questions" required>
             </div>
-            <div class="generated-paper-container">
-                {% if questions %}
-                <div class="generated-paper">
-                    <h2>Generated Question Paper</h2>
-                    <p>{{ questions }}</p>
-                </div>
-                {% endif %}
+
+            <div>
+                <label for="total_marks">Total marks:</label>
+                <input type="number" id="total_marks" name="total_marks" required>
             </div>
+
+            <div>
+                <label for="no_of_parts">Number of parts:</label>
+                <input type="number" id="no_of_parts" name="no_of_parts" required>
+            </div>
+
+            <div>
+                <label for="marks_per_part">Marks per part:</label>
+                <input type="number" id="marks_per_part" name="marks_per_part" required>
+            </div>
+
+            <div>
+                <label for="test_duration">Test duration:</label>
+                <input type="text" id="test_duration" name="test_duration" placeholder="e.g., 2 hours" required>
+            </div>
+
+            <div>
+                <label for="pdf_file">Curriculum PDF:</label>
+                <input type="file" id="pdf_file" name="pdf_file" accept="application/pdf" required>
+            </div>
+
+            <button type="submit">Generate Question Paper</button>
+        </form>
+
+        {% if questions %}
+        <div class="generated-paper" id="generated-paper">
+            <h2>Generated Question Paper</h2>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const questionsText = {{ questions|tojson }};
+                const parts = questionsText.split("Part ");
+
+                const generatedPaper = document.getElementById("generated-paper");
+
+                parts.forEach((partText, index) => {
+                    if (index > 0) {
+                        const partDiv = document.createElement("div");
+                        partDiv.className = "part";
+
+                        const partHeader = document.createElement("h3");
+                        partHeader.textContent = "Part " + index;
+                        partDiv.appendChild(partHeader);
+
+                        const questions = partText.split(/[0-9]+\./).slice(1);
+                        questions.forEach((question, qIndex) => {
+                            const questionDiv = document.createElement("div");
+                            questionDiv.className = "question";
+                            questionDiv.textContent = (qIndex + 1) + ". " + question.trim();
+                            partDiv.appendChild(questionDiv);
+                        });
+
+                        generatedPaper.appendChild(partDiv);
+                    }
+                });
+            });
+        </script>
+        {% endif %}
     </div>
+
 </body>
-</html> 
+</html>
