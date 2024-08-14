@@ -61,7 +61,7 @@ The education sector today faces significant challenges, from administrative ine
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/roshnn24/smart-education-system.git
+git clone https://github.com/roshnn24/Falcon_final.git
 ```
 
 Navigate to the project directory:
@@ -114,4 +114,3 @@ This project is licensed under the [MIT License](LICENSE).
 For more information, please reach out to us at [roshauninfant@gmail.com](mailto:roshauninfant@gmail.com).
 
 ---
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
