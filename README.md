@@ -61,7 +61,7 @@ The education sector today faces significant challenges, from administrative ine
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/smart-education-system.git
+git clone https://github.com/roshnn24/smart-education-system.git
 ```
 
 Navigate to the project directory:
