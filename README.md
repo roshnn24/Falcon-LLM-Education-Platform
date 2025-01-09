@@ -1,6 +1,6 @@
 ---
 
-# AIducation: GenAI Education Excellence
+# SmartScholar: GenAI for Smarter Education
 
 Welcome to the **AIducation** repository. This platform, powered by the **Falcon 180B LLM**, is designed to address critical challenges in modern education, transforming the learning experience for both students and teachers. Our innovative approach streamlines administrative tasks, personalizes learning, and enhances academic outcomes through advanced AI technologies.
 
